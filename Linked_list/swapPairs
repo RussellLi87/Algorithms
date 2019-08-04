@@ -1,0 +1,70 @@
+/*
+Given a linked list, swap every two adjacent nodes and return its head.
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+ 
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+*/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+   public ListNode swapPairs(ListNode head) {
+       if (head == null){
+            return null;
+        }
+       
+       if (head.next == null){
+            return head;
+        }
+       
+        ListNode cur = head;
+
+        int count = 1;
+        while (cur.next != null){
+            count++;
+            cur = cur.next;
+        }
+
+        int numPairs = count / 2;
+        cur = head;
+        ListNode n1 = cur;
+        ListNode n2 = cur;
+
+
+        for (int i = 0; i < numPairs; i++){
+            if (i == 0){
+                n2 = cur.next;
+                cur = n2.next;
+                if (numPairs - i > 1)
+                    n1.next = n2.next.next;
+                else n1.next = null;
+                n2.next = n1;
+                head = n2;
+            }else {
+                n2 = cur.next;
+                cur = n2.next;
+                if (numPairs - i > 1)
+                    n1.next = n2.next.next;
+                else n1.next = null;
+                n2.next = n1;
+            }
+            n1 = cur;
+        }
+        n2.next.next = cur;
+
+
+        return head;
+
+    }
+}
